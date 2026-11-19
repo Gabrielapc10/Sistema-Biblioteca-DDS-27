@@ -9,8 +9,14 @@ module.exports = {
     },
     // crud
     // create
-    criarUsuario: () =>{
-        console.log("Criei um usuario");        
+    criarUsuario: async (nome, email, senha, perfil) =>{
+        // variavel para guardar o comando sql 
+        const sql = `INSERT INTO tb_usuarios (nome, email, senha, perfil)
+                     + VALUES (?, ?, ?, ?)`
+        // executa o sql
+        const [resultado] = await db.execute(sql, [nome, email, senha, perfil])
+        // retorna pro controler o resultado
+        return resultado.insertId
     },
     // read
     listarUsuarios: () => {

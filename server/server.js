@@ -17,8 +17,12 @@ app.set("view engine", "ejs")
 // apontar para o ejs onde estao as paginas 
 app.set("views", path.join(__dirname, "../client/views") )
 
-// criacao das rotas 
+// middleware para entender o json
+// le os dados  
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 
+// criacao das rotas 
 // importar as rotas de usuario 
 const usuarioRoutes = require("./routes/usuarioRoutes.js")
 app.use("/usuarios", usuarioRoutes)
