@@ -13,7 +13,7 @@ module.exports = {
     },
     // crud
     // create
-    criar: async (req,res) =>{
+    criar: async (req, res) =>{
         try{
             // coleta as informacoes do body da requisicao
             const {nome, email, senha, perfil } = req.body
@@ -32,9 +32,17 @@ module.exports = {
         }
     },
     // read
-    listar: (req, res) => {
-        usuarioModels.listarUsuarios()
-        res.send("Mostrei a lista de usuarios")
+    listar: async (req, res) => {
+        try{
+            // executa o model
+            const listaUsuarios = await usuarioModels.listaUsuarios()
+            // redenriza a tela de lista, passando o que o model te mandou
+            res.render('usuario/listar', { listaUsuarios })
+        }
+        catch(erro){
+            console.log(erro);
+            res.render("erro", {erro, mensagem: "Erro ao listar os usuarios"})
+        }
     },
     // update
     atualizar: (req,res) =>{

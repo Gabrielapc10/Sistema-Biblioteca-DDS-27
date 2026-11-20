@@ -17,19 +17,15 @@ router.get("/cadastrar", (req,res) =>{
 // mandar as informacoes de cadastro para o controller
 router.post("/cadastrar", usuarioControllers.criar)
 
-// mostar a pagina de listar usuario
-router.get("/listar", (req,res) =>{
-    res.render("usuarios/listar")
-})
-
 // mostrar a pagina de editar usuario 
 router.get("/editar", (req,res) =>{
     res.render("usuarios/editar")
 })
 
-router.get("/", (req, res) => {
-    res.send("Mostrando a lista de usuarios")
-})
+// mostar a pagina de listar usuario
+router.get("/listar",usuarioControllers.listar)
+
+router.get("/", usuarioControllers.listar)
 
 // exportar o router 
 module.exports = router

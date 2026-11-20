@@ -2,7 +2,56 @@
 <%- include('../partials/header') %>
 
     <main class="container my-2 flex-grow-1">
-        <h1>Estou na pagina de listar</h1>
+        <h1 class="text-center">
+            Estou na pagina de listar
+        </h1>
+
+        <!-- botao para pagina de cadastro -->
+         <a href="/usuarios/cadastrar">
+            <button class="btn-solid theme-accent"> + Novo usuário </button>
+         </a>
+
+         <!-- tabela com os dados dos usuarios -->
+          <table class="table mt-5 table-bordered border-danger">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Senha</th>
+                    <th scope="col">Perfil</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!-- laço de repeticao pra interagit com a lista dp backend -->
+                <% listaUsuarios.forEach( user => { %>
+                    <!-- listaUsuario - lista vinda do banco -->
+                    <!-- user - cada indice d lista "listaUsuarios" -->
+                     <tr>
+                        <td> <%= user.id_usuario %> </td>
+                        <td> <%= user.nome %> </td>
+                        <td> <%= user.email %> </td>
+                        <td> <%= user.senha %> </td>
+                        <td> <%= user.perfil %> </td>
+                        <!-- botoes de acoes -->
+                        <td class="d-flex justify-content-center gap-3">
+                            <!-- botao de editar -->
+                            <a href="usuarios/editar/<%= user.id_usuario %>"></a>
+                            <button class="btn-solid theme-warning">
+                                Editar
+                            </button>
+                            <!-- botao de excluir -->
+                             <form action="usuarios/deletar/<%= user.id_usuario %>" method="post" onsubmit="return confirm('Deseja realmente excluir esse usuário?')">
+                                <button type="submit" class="btn-solid them-danger"> Excluir </button>
+                             </form>
+
+                        </td>
+                     </tr>
+                <% }) %>
+            </tbody>
+          </table>
     </main>
 
 <!-- importacao do footer -->

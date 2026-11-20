@@ -12,15 +12,22 @@ module.exports = {
     criarUsuario: async (nome, email, senha, perfil) =>{
         // variavel para guardar o comando sql 
         const sql = `INSERT INTO tb_usuarios (nome, email, senha, perfil)
-                     + VALUES (?, ?, ?, ?)`
+        VALUES (?, ?, ?, ?)`
         // executa o sql
         const [resultado] = await db.execute(sql, [nome, email, senha, perfil])
         // retorna pro controler o resultado
         return resultado.insertId
     },
     // read
-    listarUsuarios: () => {
-        console.log("Toma ai os usuarios");
+    listarUsuarios: async () => {
+        // variavel pra guardar o comando sql
+        const sql = `SELECT * FROM tb_usuarios`
+
+        // executa o sql
+        const [linhas] = await db.execute(sql)
+        
+        // retorna pro controller o resultado
+        return linhas
     },
     // update
     atualizarUsuario: () =>{
