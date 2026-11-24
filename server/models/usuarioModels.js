@@ -4,8 +4,14 @@ const db = require("../config/db.js")
 // exportar as funcos do model 
 module.exports = {
     // login
-    login : () =>{
-        console.log("Login usuario funcionando");
+    login :async (email, senha) =>{
+        // variavel para guardar o comando
+        const sql = `SELECT * FROM tb_usuarios
+                    WHERE email = ? AND senha = ?` 
+        // executa o sql 
+        const [resultado] = await db.execute(sql, [email, senha]) 
+        // retorna pro controller
+        return resultado[0] || null
     },
     // crud
     // create
@@ -26,7 +32,7 @@ module.exports = {
         // executa o sql
         const [linhas] = await db.execute(sql)
         
-        // retorna pro controller o resultado
+        // retorna pro controller o resultado                    
         return linhas
     },
     // update
@@ -34,7 +40,12 @@ module.exports = {
         console.log("Atualizei um usuario");        
     },
     // delete
-    deletarUsuario: () =>{
-        console.log("Apaguei um usuario");
+    deletarUsuario: async (id) =>{
+        // variavel para guardar o comando sql
+        const sql = `DELETE FROM tb_usuarios WHERE id_usuario = ?`
+        // executa o sql
+        const [resultado] = await db.execute(sql, [id])
+        // retorna pro controller o resultado
+        return resultado.affectedRows
     }
 }
